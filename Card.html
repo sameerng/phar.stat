@@ -1,0 +1,278 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Birthday Wishes</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rancho&effect=shadow-multiple" />
+
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+			background-color: #f0f0f0;
+			background-image: url('https://t3.ftcdn.net/jpg/06/92/67/96/360_F_692679692_SeQDy50ZrWDWs2JyKc9CI6RhOJaVZNTt.jpg');
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-attachment: fixed;
+			background-size: cover
+		}
+
+		.card {
+			background-color: #fff;
+			/*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			padding: 20px;
+			border-radius: 10px;
+			text-align: center;
+			margin: 0px 10px;
+			opacity: 0; /* Start with opacity 0 */
+			animation: fadeIn 2s ease-in-out forwards, blurIn 2s ease-in-out forwards;
+		}
+
+		@keyframes fadeIn {
+			0% {
+				opacity: 0;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
+
+		@keyframes blurIn {
+			0% {
+				filter: blur(10px);
+			}
+
+			100% {
+				filter: blur(0);
+			}
+		}
+
+		.card img {
+			width: 200px;
+			border-radius: 50%;
+			margin-bottom: 20px;
+		}
+
+		.message h1 {
+			color: #333;
+		}
+
+		.message p {
+			color: #666;
+			font-size: 16px;
+			line-height: 1.6;
+			margin-bottom: 20px;
+		}
+
+		body {
+			margin: 0;
+		}
+
+		#balloon-container {
+			height: 100vh;
+			padding: 1em;
+			box-sizing: border-box;
+			display: flex;
+			flex-wrap: wrap;
+			overflow: hidden;
+			transition: opacity 500ms;
+			/*animation: fadeIn 2s ease-in-out forwards, blurIn 2s ease-in-out forwards;*/
+		}
+
+		.balloon {
+			height: 125px;
+			width: 105px;
+			border-radius: 75% 75% 70% 70%;
+			position: relative;
+		}
+
+			.balloon:before {
+				content: "";
+				height: 75px;
+				width: 1px;
+				padding: 1px;
+				background-color: #FDFD96;
+				display: block;
+				position: absolute;
+				top: 125px;
+				left: 0;
+				right: 0;
+				margin: auto;
+			}
+
+			.balloon:after {
+				content: "▲";
+				text-align: center;
+				display: block;
+				position: absolute;
+				color: inherit;
+				top: 120px;
+				left: 0;
+				right: 0;
+				margin: auto;
+			}
+
+		@keyframes float {
+			from {
+				transform: translateY(100vh);
+				opacity: 1;
+			}
+
+			to {
+				transform: translateY(-300vh);
+				opacity: 0;
+			}
+		}
+
+		@media screen and (max-width: 992px) {
+			#birthdayMessage {
+				font-size: 25px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div id="balloon-container">
+	</div>
+	<div id="Main" style="display:none">
+		<div class="card">
+			<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcgvbL79M2zJcpIOhD_s6KvQZ_W2Log8qPRfnqH7b9d3ARKzTS0nThluvuqzYVBC0p2s&usqp=CAU" height="200" />
+			<div class="message">
+				<h1 class="font-effect-shadow-multiple">Happy Birthday <span id="names"></span> !</h1>
+				<p style="font-family: 'Tangerine', serif; font-size: 30px;font-weight:800" id="birthdayMessage">Sending you warm wishes on your special day.</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+	// Set designMode to "on"
+	//window.document.designMode = "on";
+
+	// Function to get the value of a URL parameter
+	function getURLParameter(name) {
+		const urlParams = new URLSearchParams(window.location.search);
+		return urlParams.get(name);
+	}
+
+	// Get the value of 'variable' from the URL
+	const variableValue = getURLParameter('name');
+	const formattedValue = variableValue
+  .split(' ') // Split the string into words by spaces
+  .map(word => 
+    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase() // Capitalize the first letter and lowercase the rest
+  )
+  .join(' ');
+	// Display the value on the page
+	document.getElementById('names').textContent = formattedValue;
+</script>
+
+<script>
+	// Array of birthday messages
+	const birthdayMessages = [
+		"Wishing you a day filled with love and laughter!",
+		"May your birthday be as sweet as cake!",
+		"Here's to another year of success, health and happiness!",
+		"Hope your birthday is just the beginning of a year full of happiness!",
+		"Sending you smiles for every moment of your special day!"
+	];
+
+	// Function to generate a random birthday message
+	function generateMessage() {
+		const colors = [
+			"#336699",   // Blueish
+			"#993366",   // Purpleish
+			"#669933",   // Greenish
+			"#996633",   // Brownish
+			"#666699",   // Grayish blue
+			//"#669966",   // Light green
+			//"#996699",   // Light purple
+			//"#996666",   // Light brown
+		];
+
+		const randomIndex = Math.floor(Math.random() * birthdayMessages.length);
+		const randomColor = Math.floor(Math.random() * colors.length);
+
+		const message = birthdayMessages[randomIndex];
+		const color = colors[randomColor];
+
+		const birthdayMessageElement = document.getElementById("birthdayMessage");
+		birthdayMessageElement.textContent = message;
+		birthdayMessageElement.style.color = color;
+		birthdayMessageElement.style.fontFamily = "'Tangerine', serif";
+		birthdayMessageElement.style.fontWeight = "800";
+
+	}
+	setInterval(generateMessage, 2000);
+
+
+
+	const balloonContainer = document.getElementById("balloon-container");
+
+	function random(num) {
+		return Math.floor(Math.random() * num);
+	}
+
+	function getRandomStyles() {
+		var r = random(255);
+		var g = random(255);
+		var b = random(255);
+		var mt = random(200);
+		var ml = random(50);
+		var dur = random(5) + 5;
+		return `
+		background-color: rgba(${r},${g},${b},0.7);
+		color: rgba(${r},${g},${b},0.7);
+		box-shadow: inset -7px -3px 10px rgba(${r - 10},${g - 10},${b - 10},0.7);
+		margin: ${mt}px 0 0 ${ml}px;
+		animation: float ${dur}s ease-in infinite
+  `;
+	}
+
+	function createBalloons(num) {
+		for (var i = num; i > 0; i--) {
+			var balloon = document.createElement("div");
+			balloon.className = "balloon";
+			balloon.style.cssText = getRandomStyles();
+			balloonContainer.append(balloon);
+		}
+	}
+
+	function removeBalloons() {
+		balloonContainer.style.opacity = 0;
+		setTimeout(() => {
+			balloonContainer.remove()
+		}, 500)
+	}
+
+	window.addEventListener("load", () => {
+		createBalloons(30);
+	});
+
+	//window.addEventListener("click", () => {
+	//	removeBalloons();
+	//});
+
+
+	setTimeout(() => {
+		removeBalloons();
+		const stopballoon = document.getElementById('balloon-container');
+		stopballoon.style.display = 'none';
+		const display = document.getElementById('Main');
+		display.style.display = 'block';
+		display.style.transition = 'opacity 5s';
+		//display.style.opacity = 1;
+	}, 3000)
+
+</script>
+
